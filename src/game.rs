@@ -1,10 +1,10 @@
-use piston_window::*;
 use piston_window::types::Color;
+use piston_window::*;
 
 use rand::{thread_rng, Rng};
 
-use crate::snake::{ Direction, Snake };
-use crate::draw::{ draw_block, draw_rectangle };
+use crate::draw::{draw_block, draw_rectangle};
+use crate::snake::{Direction, Snake};
 
 const FOOD_COLOR: Color = [0.80, 0.00, 0.00, 1.0];
 const BORDER_COLOR: Color = [0.00, 0.00, 0.00, 1.0];
@@ -27,8 +27,6 @@ pub struct Game {
     waiting_time: f64,
 }
 
-
-
 impl Game {
     pub fn new(width: i32, height: i32) -> Game {
         Game {
@@ -37,9 +35,9 @@ impl Game {
             food_exists: true,
             food_x: 6,
             food_y: 4,
-            width, 
+            width,
             height,
-            game_over: false
+            game_over: false,
         }
     }
 
@@ -52,10 +50,12 @@ impl Game {
             Key::Down => Some(Direction::Down),
             Key::Left => Some(Direction::Left),
             Key::Right => Some(Direction::Right),
-            _ => None
+            _ => None,
         };
-        if dir.unwrap() == self.snake.head_direction().opposite() {
-            return;
+        if let Some(k) = dir {
+            if k == self.snake.head_direction().opposite() {
+                return;
+            }
         }
         self.update_snake(dir);
     }
@@ -103,7 +103,7 @@ impl Game {
         if self.snake.overlap_tail(next_x, next_y) {
             return false;
         }
-        next_x > 0 && next_y > 0 && next_x < self.width -1 && next_y < self.height - 1
+        next_x > 0 && next_y > 0 && next_x < self.width - 1 && next_y < self.height - 1
     }
 
     fn add_food(&mut self) {
@@ -133,9 +133,8 @@ impl Game {
         self.snake = Snake::new(2, 2);
         self.waiting_time = 0.0;
         self.food_exists = true;
-        self.food_x = 6; 
+        self.food_x = 6;
         self.food_y = 4;
         self.game_over = false;
     }
 }
-

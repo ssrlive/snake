@@ -1,6 +1,6 @@
-use std::collections::LinkedList;
-use piston_window::{Context, G2d};
 use piston_window::types::Color;
+use piston_window::{Context, G2d};
+use std::collections::LinkedList;
 
 use crate::draw::draw_block;
 
@@ -32,7 +32,7 @@ struct Block {
 }
 
 pub struct Snake {
-    direction : Direction,
+    direction: Direction,
     body: LinkedList<Block>,
     tail: Option<Block>,
 }
@@ -40,8 +40,8 @@ pub struct Snake {
 impl Snake {
     pub fn new(x: i32, y: i32) -> Snake {
         let mut body: LinkedList<Block> = LinkedList::new();
-        body.push_back(Block { x: x + 2, y, });
-        body.push_back(Block { x: x + 1, y, });
+        body.push_back(Block { x: x + 2, y });
+        body.push_back(Block { x: x + 1, y });
         body.push_back(Block { x, y });
         Snake {
             direction: Direction::Right,
@@ -64,13 +64,13 @@ impl Snake {
     pub fn move_forward(&mut self, dir: Option<Direction>) {
         match dir {
             Some(d) => self.direction = d,
-            None  => (),
+            None => (),
         }
         let (last_x, last_y): (i32, i32) = self.head_position();
         let new_block = match self.direction {
             Direction::Up => Block {
                 x: last_x,
-                y: last_y -1,
+                y: last_y - 1,
             },
             Direction::Down => Block {
                 x: last_x,
@@ -128,4 +128,3 @@ impl Snake {
         return false;
     }
 }
-
